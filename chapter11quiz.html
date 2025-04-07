@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Chapter 11 Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+    .question { margin-bottom: 20px; }
+    .answers label { display: block; margin: 5px 0; }
+    #submitBtn { padding: 10px 20px; font-size: 16px; margin-top: 20px; }
+    .correct-answer { color: green; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Chapter 11 Multiple Choice Quiz</h2>
+  <div id="quizContainer"></div>
+  <button id="submitBtn">Submit</button>
+
+  <script>
+    const quizData = [
+      {
+        question: "What is the main governing body in Texas counties that functions like a legislative committee?",
+        correct: "Commissioners court",
+        answers: ["City council", "Commissioners court", "County executive board", "Municipal panel"]
+      },
+      {
+        question: "How many members are in a county commissioners court?",
+        correct: "Five: four commissioners and one county judge",
+        answers: ["Five: four commissioners and one county judge", "Three: two commissioners and one sheriff", "Four: one from each city", "Six: five commissioners and one clerk"]
+      },
+      {
+        question: "What is the primary function of the commissioners court?",
+        correct: "Administrative tasks",
+        answers: ["Judicial rulings", "Law enforcement", "Administrative tasks", "Legislative proposals"]
+      },
+      {
+        question: "What is a key role of individual county commissioners?",
+        correct: "Overseeing operations in their precinct",
+        answers: ["Managing police forces", "Overseeing operations in their precinct", "Writing new state laws", "Appointing judges"]
+      },
+      {
+        question: "In city governments, what often takes the place of committees?",
+        correct: "Specialized departments",
+        answers: ["Sheriffs", "Public referendums", "Specialized departments", "Grand juries"]
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function loadQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = '';
+      shuffle(quizData);
+
+      quizData.forEach((item, index) => {
+        shuffle(item.answers);
+        const qDiv = document.createElement('div');
+        qDiv.className = 'question';
+        qDiv.innerHTML = `<p><strong>${index + 1}. ${item.question}</strong></p>`;
+
+        const answersDiv = document.createElement('div');
+        answersDiv.className = 'answers';
+
+        item.answers.forEach(answer => {
+          const id = `q${index}_${answer}`;
+          answersDiv.innerHTML += `
+            <label>
+              <input type="radio" name="q${index}" value="${answer}"> ${answer}
+            </label>
+          `;
+        });
+
+        qDiv.appendChild(answersDiv);
+        container.appendChild(qDiv);
+      });
+    }
+
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      let score = 0;
+      let missed = [];
+
+      quizData.forEach((item, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if (selected && selected.value === item.correct) {
+          score++;
+        } else {
+          missed.push({ question: item.question, correct: item.correct });
+        }
+      });
+
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = `<h2>Your Score: ${score} / ${quizData.length}</h2>`;
+
+      if (missed.length > 0) {
+        container.innerHTML += `<h3>You missed the following questions:</h3>`;
+        missed.forEach((item, i) => {
+          container.innerHTML += `
+            <div class="question">
+              <p><strong>${i + 1}. ${item.question}</strong></p>
+              <p class="correct-answer">Correct answer: ${item.correct}</p>
+            </div>
+          `;
+        });
+      } else {
+        container.innerHTML += `<p><strong>Perfect score! Great job!</strong></p>`;
+      }
+
+      document.getElementById('submitBtn').style.display = 'none';
+    });
+
+    window.onload = loadQuiz;
+  </script>
+</body>
+</html>
