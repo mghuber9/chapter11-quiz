@@ -242,6 +242,20 @@
         }
       });
 
+let name = prompt("Chapter 11 Scores");
+fetch("https://script.google.com/macros/s/AKfycbyeQb9Vch0vWdHul8_czkVb6Qe0qQFTiZjG3gCpVu6wIUYEUD5BDvmdOIL9GyzCoqoS/exec", {
+  method: "POST",
+  body: JSON.stringify({
+    name: name,
+    score: score,
+    total: quizData.length
+  }),
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
+
+      
       const container = document.getElementById('quizContainer');
       container.innerHTML = `<h2>Your Score: ${score} / ${quizData.length}</h2>`;
 
