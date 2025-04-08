@@ -75,41 +75,21 @@
       let name = prompt("Enter your name for the score sheet:");
       if (!name) name = "Anonymous";
 
-      fetch("fetch("https://script.google.com/macros/s/AKfycbyuwcSOmBkqDpm88E3mMoaKjCHXn75mluPMSZYu_CMzcatTI0fqbKM3nQMOU5daMeq7/exec", {
-", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name: name,
-          score: score,
-          total: quizData.length
-        })
-      })
-      .then(response => response.text())
-      .then(data => console.log("Google Sheets response:", data))
-      .catch(error => console.error("Error sending to Google Sheets:", error));
+      let name = prompt("Enter your name:");
+let quizName = "ch 11"; // optional static label
+let total = quizData.length;
 
-      const container = document.getElementById('quizContainer');
-      container.innerHTML = `<h2>Your Score: ${score} / ${quizData.length}</h2>`;
+const formData = new FormData();
+formData.append("entry.501165056", name);             // Student Name
+formData.append("entry.568812027", quizName);         // Quiz Name
+formData.append("entry.1271212779", score);           // Score
+formData.append("entry.41916079", total);             // Total Questions
 
-      if (missed.length > 0) {
-        container.innerHTML += `<h3>You missed the following questions:</h3>`;
-        missed.forEach((item, i) => {
-          container.innerHTML += `
-            <div class="question">
-              <p><strong>${i + 1}. ${item.question}</strong></p>
-              <p class="correct-answer">Correct answer: ${item.correct}</p>
-            </div>
-          `;
-        });
-      } else {
-        container.innerHTML += `<p><strong>Perfect score! Great job!</strong></p>`;
-      }
-
-      document.getElementById('submitBtn').style.display = 'none';
-    });
+fetch("https://docs.google.com/forms/d/e/1FAIpQLSeuR3sN_0Mflmy4RPp9mwgMPFncXOoUuI7IQGKKMCNH_prDiw/formResponse", {
+  method: "POST",
+  mode: "no-cors",
+  body: formData
+});
 
     window.onload = loadQuiz;
   </script>
