@@ -17,95 +17,105 @@
   <button id="submitBtn">Submit</button>
 
   <script>
-  const quizData = [/* your 35+ questions go here */];
-
-  function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  }
-
-  function loadQuiz() {
-    const container = document.getElementById('quizContainer');
-    container.innerHTML = '';
-    shuffle(quizData);
-
-    quizData.forEach((item, index) => {
-      shuffle(item.answers);
-      const qDiv = document.createElement('div');
-      qDiv.className = 'question';
-      qDiv.innerHTML = `<p><strong>${index + 1}. ${item.question}</strong></p>`;
-
-      const answersDiv = document.createElement('div');
-      answersDiv.className = 'answers';
-
-      item.answers.forEach(answer => {
-        answersDiv.innerHTML += `
-          <label>
-            <input type="radio" name="q${index}" value="${answer}"> ${answer}
-          </label>
-        `;
-      });
-
-      qDiv.appendChild(answersDiv);
-      container.appendChild(qDiv);
-    });
-  }
-
-  document.getElementById('submitBtn').addEventListener('click', () => {
-    let score = 0;
-    let missed = [];
-
-    quizData.forEach((item, index) => {
-      const selected = document.querySelector(`input[name="q${index}"]:checked`);
-      if (selected && selected.value === item.correct) {
-        score++;
-      } else {
-        missed.push({ question: item.question, correct: item.correct });
+    const quizData = [
+      // (Trimmed for space — replace with full list of 35+ questions you already used)
+      {
+        question: "What is the main governing body in Texas counties that functions like a legislative committee?",
+        correct: "Commissioners court",
+        answers: ["City council", "Commissioners court", "County executive board", "Municipal panel"]
+      },
+      {
+        question: "How many members are in a county commissioners court?",
+        correct: "Five: four commissioners and one county judge",
+        answers: ["Five: four commissioners and one county judge", "Three: two commissioners and one sheriff", "Four: one from each city", "Six: five commissioners and one clerk"]
       }
-    });
+      // Add the rest here...
+    ];
 
-    // Prompt for name BEFORE clearing the screen
-    let name = prompt("Enter your name (for the score sheet):");
-
-    // Send data to Google Sheets
-    fetch("https://script.google.com/macros/s/AKfycbyeQb9Vch0vWdHul8_czkVb6Qe0qQFTiZjG3gCpVu6wIUYEUD5BDvmdOIL9GyzCoqoS/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: name,
-        score: score,
-        total: quizData.length
-      })
-    })
-    .then(res => res.text())
-    .then(response => console.log("Response from server:", response))
-    .catch(err => console.error("Error sending score:", err));
-
-    // Display score & missed questions
-    const container = document.getElementById('quizContainer');
-    container.innerHTML = `<h2>Your Score: ${score} / ${quizData.length}</h2>`;
-
-    if (missed.length > 0) {
-      container.innerHTML += `<h3>You missed the following questions:</h3>`;
-      missed.forEach((item, i) => {
-        container.innerHTML += `
-          <div class="question">
-            <p><strong>${i + 1}. ${item.question}</strong></p>
-            <p class="correct-answer">Correct answer: ${item.correct}</p>
-          </div>
-        `;
-      });
-    } else {
-      container.innerHTML += `<p><strong>Perfect score! Great job!</strong></p>`;
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
     }
 
-    document.getElementById('submitBtn').style.display = 'none';
-  });
+    function loadQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = '';
+      shuffle(quizData);
 
-  window.onload = loadQuiz;
-</script>
+      quizData.forEach((item, index) => {
+        shuffle(item.answers);
+        const qDiv = document.createElement('div');
+        qDiv.className = 'question';
+        qDiv.innerHTML = `<p><strong>${index + 1}. ${item.question}</strong></p>`;
 
-</body>
-</html>
+        const answersDiv = document.createElement('div');
+        answersDiv.className = 'answers';
+
+        item.answers.forEach(answer => {
+          answersDiv.innerHTML += `
+            <label>
+              <input type="radio" name="q${index}" value="${answer}"> ${answer}
+            </label>
+          `;
+        });
+
+        qDiv.appendChild(answersDiv);
+        container.appendChild(qDiv);
+      });
+    }
+
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      let score = 0;
+      let missed = [];
+
+      quizData.forEach((item, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if (selected && selected.value === item.correct) {
+          score++;
+        } else {
+          missed.push({ question: item.question, correct: item.correct });
+        }
+      });
+
+      let name = prompt("Enter your name for the score sheet:");
+      if (!name) name = "Anonymous";
+
+      // Log to console (helpful for debugging)
+      console.log("Submitting score for:", name, score);
+
+      fetch("https://script.google.com/macros/s/AKfycbyeQb9Vch0vWdHul8_czkVb6Qe0qQFTiZjG3gCpVu6wIUYEUD5BDvmdOIL9GyzCoqoS/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: name,
+          score: score,
+          total: quizData.length
+        })
+      })
+      .then(response => response.text())
+      .then(data => console.log("Google Sheets response:", data))
+      .catch(error => console.error("Error sending to Google Sheets:", error));
+
+      // Show results on screen
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = `<h2>Your Score: ${score} / ${quizData.length}</h2>`;
+
+      if (missed.length > 0) {
+        container.innerHTML += `<h3>You missed the following questions:</h3>`;
+        missed.forEach((item, i) => {
+          container.innerHTML += `
+            <div class="question">
+              <p><strong>${i + 1}. ${item.question}</strong></p>
+              <p class="correct-answer">Correct answer: ${item.correct}</p>
+            </div>
+          `;
+        });
+      } else {
+        container.innerHTML += `<p><strong>Perfect score! Great job!</strong></p>`;
+      }
+
+      document.getElementById('submitBtn').style.display =
