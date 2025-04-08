@@ -18,18 +18,41 @@
 
   <script>
     const quizData = [
-      // (Trimmed for space — replace with full list of 35+ questions you already used)
-      {
-        question: "What is the main governing body in Texas counties that functions like a legislative committee?",
-        correct: "Commissioners court",
-        answers: ["City council", "Commissioners court", "County executive board", "Municipal panel"]
-      },
-      {
-        question: "How many members are in a county commissioners court?",
-        correct: "Five: four commissioners and one county judge",
-        answers: ["Five: four commissioners and one county judge", "Three: two commissioners and one sheriff", "Four: one from each city", "Six: five commissioners and one clerk"]
-      }
-      // Add the rest here...
+      { question: "What is the main governing body in Texas counties that functions like a legislative committee?", correct: "Commissioners court", answers: ["City council", "Commissioners court", "County executive board", "Municipal panel"] },
+      { question: "How many members are in a county commissioners court?", correct: "Five: four commissioners and one county judge", answers: ["Five: four commissioners and one county judge", "Three: two commissioners and one sheriff", "Four: one from each city", "Six: five commissioners and one clerk"] },
+      { question: "What is the primary function of the commissioners court?", correct: "Administrative tasks", answers: ["Judicial rulings", "Law enforcement", "Administrative tasks", "Legislative proposals"] },
+      { question: "What is a key role of individual county commissioners?", correct: "Overseeing operations in their precinct", answers: ["Managing police forces", "Overseeing operations in their precinct", "Writing new state laws", "Appointing judges"] },
+      { question: "In city governments, what often takes the place of committees?", correct: "Specialized departments", answers: ["Sheriffs", "Public referendums", "Specialized departments", "Grand juries"] },
+      { question: "In a council-manager system, who carries out the city council’s policies?", correct: "City manager", answers: ["Mayor", "City attorney", "City manager", "Public works director"] },
+      { question: "What is one benefit of using specialized departments or city managers in local government?", correct: "Division of labor and localized control", answers: ["Higher voter turnout", "Reduced tax rates", "Centralized state control", "Division of labor and localized control"] },
+      { question: "Which reform helped increase ethnic and racial representation in local government?", correct: "Single-member districts", answers: ["At-large elections", "Party primaries", "Single-member districts", "Council-manager systems"] },
+      { question: "What is a key benefit of single-member districts?", correct: "Increases diversity in representation", answers: ["Encourages political parties", "Increases diversity in representation", "Reduces campaign costs", "Guarantees higher salaries"] },
+      { question: "Increased minority representation has contributed to:", correct: "More inclusive policies and contracts", answers: ["Higher voter registration fees", "More inclusive policies and contracts", "Elimination of term limits", "Closure of neighborhood councils"] },
+      { question: "What has helped women and people of color win local office?", correct: "Civic group support", answers: ["Federal mandates", "Political party funding", "Civic group support", "Property tax caps"] },
+      { question: "Chapter 11 emphasizes inclusivity trends but does not include:", correct: "Specific demographic statistics", answers: ["Legislative structure", "Specific demographic statistics", "Local election processes", "Single-member district impacts"] },
+      { question: "Which groups help promote diverse candidates in local elections?", correct: "Neighborhood associations", answers: ["Police unions", "Charter schools", "Neighborhood associations", "District courts"] },
+      { question: "What is the overall result of electoral reform and civic participation?", correct: "More representative councils", answers: ["Decline in local diversity", "More representative councils", "Federal control over cities", "Reduced public engagement"] },
+      { question: "Criminal cases are typically handled by:", correct: "Sheriffs, constables, and district attorneys", answers: ["District clerks", "Civil attorneys", "Sheriffs, constables, and district attorneys", "County treasurers"] },
+      { question: "Which is an example of a civil case?", correct: "Eviction dispute", answers: ["Burglary", "Assault", "Eviction dispute", "DUI charge"] },
+      { question: "Constables usually handle:", correct: "Civil court orders like evictions", answers: ["Criminal investigations", "Civil court orders like evictions", "Highway patrol", "Tax collection"] },
+      { question: "Sheriffs mainly focus on:", correct: "Criminal law enforcement", answers: ["Writing legislation", "Approving court budgets", "Civil document filing", "Criminal law enforcement"] },
+      { question: "Which courts often hear civil cases first?", correct: "Justice of the Peace and County Courts", answers: ["Texas Supreme Court", "Justice of the Peace and County Courts", "Federal District Courts", "Court of Criminal Appeals"] },
+      { question: "Criminal cases that are felonies are usually tried in:", correct: "District courts", answers: ["Family courts", "District courts", "Municipal courts", "Appellate courts"] },
+      { question: "The main goal of criminal law is to:", correct: "Punish and deter unlawful behavior", answers: ["Resolve disputes peacefully", "Punish and deter unlawful behavior", "Improve infrastructure", "Protect property titles"] },
+      { question: "Which office is responsible for managing jury notifications?", correct: "District Clerk", answers: ["County Judge", "District Clerk", "County Treasurer", "Attorney General"] },
+      { question: "What is the function of a grand jury?", correct: "Determine if there’s enough evidence for trial", answers: ["Issue fines", "Try civil cases", "Determine if there’s enough evidence for trial", "Approve legislation"] },
+      { question: "What is the function of a trial jury?", correct: "Decide the verdict in a case", answers: ["Issue subpoenas", "Choose the judge", "Decide the verdict in a case", "Approve indictments"] },
+      { question: "Grand juries usually meet:", correct: "In private", answers: ["In public", "Only for civil trials", "Online", "In private"] },
+      { question: "Which type of jury is used in both criminal and civil trials?", correct: "Trial jury", answers: ["Grand jury", "Trial jury", "Legislative jury", "District jury"] },
+      { question: "What type of case always requires a grand jury?", correct: "Felony criminal cases", answers: ["Traffic violations", "Felony criminal cases", "Divorce proceedings", "Land disputes"] },
+      { question: "Jury processes in local government are coordinated by:", correct: "District clerks", answers: ["School boards", "Special districts", "District clerks", "City managers"] },
+      { question: "What is original jurisdiction?", correct: "Authority to hear a case for the first time", answers: ["Authority to review a lower court’s decision", "Authority to hear a case for the first time", "Authority to pass ordinances", "Authority to file appeals"] },
+      { question: "County courts generally hear:", correct: "Misdemeanors and civil cases", answers: ["Appeals from lower courts", "Felony criminal trials", "Misdemeanors and civil cases", "Federal crimes"] },
+      { question: "Which courts handle felony trials and large civil disputes?", correct: "District courts", answers: ["Justice of the peace courts", "Municipal courts", "District courts", "County treasurer’s office"] },
+      { question: "What is appellate jurisdiction?", correct: "Authority to review lower court decisions", answers: ["Authority to make laws", "Authority to hear initial trials", "Authority to review lower court decisions", "Authority to register voters"] },
+      { question: "Chapter 11 implies that local courts mostly exercise:", correct: "Original jurisdiction", answers: ["Appellate jurisdiction", "Judicial review", "Original jurisdiction", "International law authority"] },
+      { question: "Appeals from county or district courts go to:", correct: "Higher state courts", answers: ["City council", "Governor’s office", "Higher state courts", "Municipal departments"] },
+      { question: "Local courts and officials mainly contribute to:", correct: "Initial legal proceedings", answers: ["Final appeals", "Civil lawsuits", "Initial legal proceedings", "Writing state laws"] }
     ];
 
     function shuffle(array) {
@@ -82,9 +105,6 @@
       let name = prompt("Enter your name for the score sheet:");
       if (!name) name = "Anonymous";
 
-      // Log to console (helpful for debugging)
-      console.log("Submitting score for:", name, score);
-
       fetch("https://script.google.com/macros/s/AKfycbyeQb9Vch0vWdHul8_czkVb6Qe0qQFTiZjG3gCpVu6wIUYEUD5BDvmdOIL9GyzCoqoS/exec", {
         method: "POST",
         headers: {
@@ -100,7 +120,6 @@
       .then(data => console.log("Google Sheets response:", data))
       .catch(error => console.error("Error sending to Google Sheets:", error));
 
-      // Show results on screen
       const container = document.getElementById('quizContainer');
       container.innerHTML = `<h2>Your Score: ${score} / ${quizData.length}</h2>`;
 
@@ -118,4 +137,10 @@
         container.innerHTML += `<p><strong>Perfect score! Great job!</strong></p>`;
       }
 
-      document.getElementById('submitBtn').style.display =
+      document.getElementById('submitBtn').style.display = 'none';
+    });
+
+    window.onload = loadQuiz;
+  </script>
+</body>
+</html>
